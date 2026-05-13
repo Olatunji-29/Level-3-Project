@@ -7,11 +7,14 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
 
 
 
 const App = () => {
+  
+  const navigate = useNavigate();
   const [schools, setSchools] = useState([]);
   const [selectedSchool, setSelectedSchool] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState("");
@@ -20,7 +23,7 @@ const App = () => {
 
 
   useEffect(() => {
-    axios.get('http://localhost:2419/school')
+    axios.get('http://localhost:2419/institutions/schools')
       .then((result) => {
 
         const info = result.data.data
@@ -107,7 +110,7 @@ const App = () => {
                   onChange={(e) => setSelectedCourse(e.target.value)}
                 >
                   <option value="">Available Courses</option>
-                  {selectedSchool?.courses.map((course, index) => (
+                  {selectedSchool?.courses?.map((course, index) => (
                     <option key={index} value={course.name}>
                       {course.name}
                     </option>
@@ -127,7 +130,7 @@ const App = () => {
                   }} value={selectedDegree} onChange={(e) => setSelectedDegree(e.target.value)}
                 >
                   <option value="" >Available Degrees</option>
-                  {selectedSchool?.degrees.map((degree, index) => (
+                  {selectedSchool?.degrees?.map((degree, index) => (
                     <option key={index} value={degree.type}>
                       {degree.type}
                     </option>
@@ -166,48 +169,6 @@ const App = () => {
 
             <div className="card border-0 shadow-sm rounded-4 overflow-hidden">
               <div className="table-responsive">
-                {/* <table className="table mb-0 align-middle">
-                  <thead style={{ backgroundColor: '#1A1A1A' }}>
-                    <tr>
-                      <th className="px-4 py-3 small fw-bold text-warning border-0">UNIVERSITY NAME</th>
-                      <th className="px-4 py-3 small fw-bold text-warning border-0">COURSE NAME</th>
-                      <th className="px-4 py-3 small fw-bold text-warning border-0">JAMB SCORE</th>
-                      <th className="px-4 py-3 small fw-bold text-warning border-0">SUBJECTS</th>
-                      <th className="px-4 py-3 small fw-bold text-warning border-0">ANNUAL TUITION</th>
-                      <th className="px-4 py-3 border-0"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {courses.map((course, idx) => (
-                      <tr key={idx}>
-                        <td className="px-4 py-3">
-                          <div className="d-flex align-items-center gap-3">
-                            <span className="fs-4">{course.logo}</span>
-                            <div>
-                              <div className="fw-bold small">{course.school}</div>
-                              <span className={`badge ${course.status === 'CLOSED' ? 'text-danger bg-danger-subtle' : 'text-success bg-success-subtle'}`} style={{ fontSize: '9px' }}>{course.status}</span>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-4 py-3">
-                          <div className="fw-bold small">{course.type}</div>
-                          <div className="text-muted" style={{ fontSize: '10px' }}>{course.duration}</div>
-                        </td>
-                        <td className="px-4 py-3 fw-bold text-warning">{course.score}</td>
-                        <td className="px-4 py-3 text-muted" style={{ fontSize: '10px', maxWidth: '120px' }}>{course.subjects}</td>
-                        <td className="px-4 py-3">
-                          <div className="fw-bold small">{course.tuition}</div>
-                          <div className="text-muted" style={{ fontSize: '9px' }}>PER SESSION</div>
-                        </td>
-                        <td className="px-4 py-3">
-                          <button className="btn btn-sm border text-secondary"><Plus size={16} /></button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table> */}
-
-
 
 
                 <table border="1" cellPadding="8" style={{ marginTop: '20px' }} className="table mb-0 align-middle">
@@ -240,7 +201,7 @@ const App = () => {
                             )?.cutOffMark || "N/A"}
                           </td>
                           <td className="px-4 py-3">
-                            {selectedSchool.courses.find(c => c.name === selectedCourse)?.tution || "I dont know"}
+                            {`₦${selectedSchool.courses.find(c => c.name === selectedCourse)?.tuition || "I dont know"}`}
                           </td>
                         </tr>
 
@@ -248,10 +209,8 @@ const App = () => {
                         <tr>
                           <td colSpan={4} className="text-center px-4 py-3">
                             <button
-                              className="btn btn-primary"
-                              onClick={() =>
-                                navigate(`/school/${selectedSchool._id}/course/${selectedCourse}`)
-                              }
+                              onClick={() => navigate(`/school/${selectedSchool._id}`)}
+                              className="btn btn-primary btn-sm"
                             >
                               See More
                             </button>

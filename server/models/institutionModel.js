@@ -51,4 +51,4 @@ const schoolSchema = new Schema({
   }
 }, { timestamps: true }); // Adds createdAt and updatedAt automatically
 
-module.exports = mongoose.model("schools", schoolSchema);
+module.exports = mongoose.model("institutions", schoolSchema);

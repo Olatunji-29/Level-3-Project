@@ -18,7 +18,7 @@ const createInstitution = async (req, res) => {
 // 2. Get all institutions (For the dropdown list)
 const getAllInstitutions = async (req, res) => {
   try {
-    const schools = await Institution.find().select('name institutionId location');
+    const schools = await Institution.find();
     res.status(200).json({ success: true, data: schools });
   } catch (error) {
     res.status(500).json({ success: false, message: "Error fetching data" });
@@ -51,9 +51,79 @@ const getSingleSchool = async (req, res) => {
   }
 };
 
+
+const addCourse = async (req, res) => {
+  try {
+    const updatedInstitution = await Institution.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: { courses: req.body }
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Course added successfully",
+      data: updatedInstitution
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+const deleteInstitution = async (req, res) => {
+  try {
+    await Institution.findByIdAndDelete(req.params.id);
+
+    res.json({
+      success: true,
+      message: "Institution deleted successfully"
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+const updateInstitution = async (req, res) => {
+  try {
+    const updated = await Institution.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true } // returns updated data
+    );
+
+    if (!updated) {
+      return res.status(404).json({
+        success: false,
+        message: "Institution not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Institution updated successfully",
+      data: updated
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+
 // --- MODULE EXPORTS AT THE BOTTOM ---
 module.exports = {
   createInstitution,
   getAllInstitutions,
-  getSingleSchool
+  getSingleSchool,
+  addCourse,
+  deleteInstitution,
+  updateInstitution
 };

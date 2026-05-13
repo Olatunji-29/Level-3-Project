@@ -430,7 +430,7 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, School, BookOpen, MapPin, Save, XCircle, ChevronRight, Database } from 'lucide-react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -446,6 +446,33 @@ const AdminDashboard = () => {
         location: '',
         state: '',
     });
+
+    const [schools, setSchools] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:2419/institutions/schools")
+            .then(res => {
+                setSchools(res.data.data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, []);
+
+    const deleteSchool = async (id) => {
+        try {
+            await axios.delete(`http://localhost:2419/institutions/${id}`);
+
+            // remove from UI instantly
+            setSchools(prev => prev.filter(s => s._id !== id));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    
+
+
 
     // Course List State
     const [coursesList, setCoursesList] = useState([]);
@@ -664,6 +691,55 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className="card border-0 shadow-sm rounded-4 p-4 mt-4">
+                    <h5 className="fw-bold mb-3">All Schools</h5>
+
+                    {schools.length === 0 ? (
+                        <p className="text-muted">No schools found</p>
+                    ) : (
+                        schools.map((school, index) => (
+                            <div
+                                key={school._id}
+                                className="d-flex justify-content-between align-items-center border-bottom py-2"
+                            >
+                                <div>
+                                    <div className="fw-bold">
+                                        {index + 1}. {school.name}
+                                    </div>
+                                    <div className="text-muted small">
+                                        {school.location} • {school.state}
+                                    </div>
+                                </div>
+
+                                <div className="d-flex gap-2">
+                                    <button className="btn btn-sm btn-warning">
+                                        Edit
+                                    </button>
+
+                                    {/* <button
+                                            onClick={() => deleteSchool(school._id)}
+                                            className="btn btn-sm btn-danger"
+                                        >
+                                            Delete
+                                        </button> */}
+                                    <button
+                                        onClick={() => {
+                                            const confirmDelete = window.confirm("Are you sure you want to delete this school?");
+                                            if (confirmDelete) {
+                                                deleteSchool(school._id);
+                                            }
+                                        }}
+                                        className="btn btn-sm btn-danger"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
+
             </div>
             <Footer />
         </div>

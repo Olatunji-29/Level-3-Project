@@ -8,13 +8,16 @@ import Login from './pages/Login.jsx'
 import Landingpage from './pages/Landingpage.jsx'
 import Signup from './pages/Signup.jsx'
 import AdminDashboard from './pages/AdminDashboard.jsx'
+import SchoolDetails from './pages/SchoolDetails.jsx'
 
 const router = createBrowserRouter([
   {path:'/', element: <Landingpage/>},
   {path:'/in', element: <Login/> },
   {path:'/dash', element: <App/> },
   {path:'/up', element: <Signup/> },
-  {path:'/admin', element: <AdminDashboard/>}
+  {path:'/admin', element: <AdminDashboard/>},
+  {path:"/school/:id", element:<SchoolDetails/>}
+
 
 
 
