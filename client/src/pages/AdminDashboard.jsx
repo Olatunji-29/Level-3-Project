@@ -445,6 +445,7 @@ const AdminDashboard = () => {
         type: '',
         location: '',
         state: '',
+        link: '',
     });
 
     const [schools, setSchools] = useState([]);
@@ -609,6 +610,11 @@ const AdminDashboard = () => {
                                 <div className="col-md-3">
                                     <label className="form-label small text-muted fw-bold">STATE</label>
                                     <input type="text" name="state" className="form-control bg-light border-0 py-2" placeholder="Oyo State" value={formData.state} onChange={handleInputChange} />
+                                </div>
+
+                                 <div className="col-md-6">
+                                    <label className="form-label small text-muted fw-bold">PORTAL</label>
+                                    <input type="text" name="link" className="form-control bg-light border-0 py-2" placeholder="https//:...." value={formData.link} onChange={handleInputChange} />
                                 </div>
                             </form>
                         </div>

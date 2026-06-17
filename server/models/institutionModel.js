@@ -27,6 +27,7 @@ const schoolSchema = new Schema({
   },
   location: { type: String, required: true },
   state: { type: String, required: true },
+  link: {type: String, required: true},
   
   // Use the sub-schemas here
   courses: [courseSchema], 

@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const App = () => {
-  
+
   const navigate = useNavigate();
   const [schools, setSchools] = useState([]);
   const [selectedSchool, setSelectedSchool] = useState(null);
@@ -49,16 +49,16 @@ const App = () => {
   }
 
 
-  const courses = [
-    { school: "University of Lagos", status: "ADMISSION OPEN", type: "B.Sc Computer Science", duration: "4 Years | Full-time", score: "280+", subjects: "Math, Eng, Phys, Chem", tuition: "₦245,000", logo: "🏛️" },
-    { school: "Covenant University", status: "ADMISSION OPEN", type: "B.Eng Software Engineering", duration: "5 Years | Full-time", score: "250+", subjects: "Math, Eng, Phys, Chem", tuition: "₦1,200,000", logo: "🎓" },
-    { school: "Ibadan University", status: "CLOSED", type: "B.Sc Data Science", duration: "4 Years | Full-time", score: "275+", subjects: "Math, Eng, Phys, Econ", tuition: "₦210,000", logo: "🏛️" },
-    { school: "Lagos Business School", status: "ADMISSION OPEN", type: "B.Sc Business Analytics", duration: "4 Years | Part-time", score: "240+", subjects: "Math, Eng, Gov, Lit", tuition: "₦1,500,000", logo: "🏢" },
-  ];
+  // const courses = [
+  //   { school: "University of Lagos", status: "ADMISSION OPEN", type: "B.Sc Computer Science", duration: "4 Years | Full-time", score: "280+", subjects: "Math, Eng, Phys, Chem", tuition: "₦245,000", logo: "🏛️" },
+  //   { school: "Covenant University", status: "ADMISSION OPEN", type: "B.Eng Software Engineering", duration: "5 Years | Full-time", score: "250+", subjects: "Math, Eng, Phys, Chem", tuition: "₦1,200,000", logo: "🎓" },
+  //   { school: "Ibadan University", status: "CLOSED", type: "B.Sc Data Science", duration: "4 Years | Full-time", score: "275+", subjects: "Math, Eng, Phys, Econ", tuition: "₦210,000", logo: "🏛️" },
+  //   { school: "Lagos Business School", status: "ADMISSION OPEN", type: "B.Sc Business Analytics", duration: "4 Years | Part-time", score: "240+", subjects: "Math, Eng, Gov, Lit", tuition: "₦1,500,000", logo: "🏢" },
+  // ];
 
-  const filteredCourses = selectedSchool
-    ? courses.filter(course => course.school === selectedSchool)
-    : courses;
+  // const filteredCourses = selectedSchool
+  //   ? courses.filter(course => course.school === selectedSchool)
+  //   : courses;
 
 
   return (
@@ -205,11 +205,19 @@ const App = () => {
                           </td>
                         </tr>
 
-                        {/* See More Button Row */}
+                        <tr>
+                          
+                        </tr>
+
                         <tr>
                           <td colSpan={4} className="text-center px-4 py-3">
                             <button
-                              onClick={() => navigate(`/school/${selectedSchool._id}`)}
+                              onClick={() => {
+                                console.log(`Link: ${selectedSchool.link}`);
+                                window.open(selectedSchool.link, "_blank");
+
+                              
+                              }}
                               className="btn btn-primary btn-sm"
                             >
                               See More
