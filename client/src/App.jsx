@@ -107,7 +107,14 @@ const App = () => {
                     cursor: 'pointer',
                     minWidth: '120px'
                   }} value={selectedCourse}
-                  onChange={(e) => setSelectedCourse(e.target.value)}
+                  onChange={(e) => {
+                    const course = selectedSchool?.courses?.find(
+                      c => c.name === e.target.value
+                    );
+
+                    setSelectedCourse(e.target.value);
+                    setSelectedDegree(course?.degree || "");
+                  }}
                 >
                   <option value="">Available Courses</option>
                   {selectedSchool?.courses?.map((course, index) => (
@@ -121,21 +128,22 @@ const App = () => {
 
             <div className="col-md-2">
               <div className="d-flex align-items-center justify-content-between bg-white text-dark p-1 rounded h-100 px-3 cursor-pointer border-start">
+
                 <select
                   className="form-select border-0 shadow-none bg-transparent fw-medium"
                   style={{
                     fontSize: '14px',
-                    cursor: 'pointer',
                     minWidth: '120px'
-                  }} value={selectedDegree} onChange={(e) => setSelectedDegree(e.target.value)}
+                  }}
+                  value={selectedDegree}
+                  disabled
                 >
-                  <option value="" >Available Degrees</option>
-                  {selectedSchool?.degrees?.map((degree, index) => (
-                    <option key={index} value={degree.type}>
-                      {degree.type}
-                    </option>
-                  ))}
+                  <option value={selectedDegree}>
+                    {selectedDegree || "Available Degree"}
+                  </option>
                 </select>
+
+
               </div>
             </div>
             <div className="col-md-2">
@@ -171,7 +179,7 @@ const App = () => {
               <div className="table-responsive">
 
 
-                <table border="1" cellPadding="8" style={{ marginTop: '20px' }} className="table mb-0 align-middle">
+                <table border="1" cellPadding="8" style={{ marginTop: '20px' }} className="table mb-0  align-middle">
                   <thead style={{ backgroundColor: '#1A1A1A' }}>
                     <tr>
                       <th className="px-4 py-3 small fw-bold text-warning border-0">School</th>
@@ -185,7 +193,7 @@ const App = () => {
                     {selectedSchool && selectedCourse && selectedDegree ? (
                       <>
                         {/* Details Row */}
-                        <tr>
+                        <tr >
                           <td className="px-4 py-3">
                             {selectedSchool.name}
                           </td>
@@ -206,22 +214,57 @@ const App = () => {
                         </tr>
 
                         <tr>
-                          
+
+                          <td colSpan={6} className='text-start rounded-0 p-3' style={{ backgroundColor: '##FFC12F' }}>
+
+                            <span>
+                              <strong>{selectedSchool.name}</strong>  is a <strong>{selectedSchool.type}</strong> located in <strong>{selectedSchool.location} </strong>, established in <strong>{selectedSchool.year || '....'}</strong>. The institution offers accredited programmes across various fields, including <strong>{selectedCourse}</strong>, leading to the award of a <strong>{selectedDegree}</strong> degree. <br /> <br />
+
+                              <strong>Quick Hints for Applicants:</strong> <hr />
+
+
+                              <br />
+
+                              • Admission: The primary cut-off mark sits around{" "}
+                              <strong>
+                                {selectedSchool.courses.find(c => c.name === selectedCourse)?.cutOffMark || "N/A"}
+                              </strong>.
+                              If your score is lower, <strong>{selectedSchool.path || 'No other program'} </strong> is available in the school which you can consider looking forward to . <hr />
+
+                              • Subject Combination: The subjects required for <strong>{selectedCourse}</strong> are{" "}
+                              <strong>
+                                {selectedSchool.courses
+                                  .find(c => c.name === selectedCourse)
+                                  ?.jambSubjectCombination.join(", ")}
+                              </strong>. Applicant should know that Wrong subject combination can cause him/her admission. <br />  <hr />
+
+
+                              • Admission competition: <strong>{selectedSchool.name}</strong> is ranked <strong>{selectedSchool.rank} </strong>. So, that tells you how competitive the school is. And based on previous year, The school have approximately <strong>{selectedSchool.applicant}</strong> and still looking forward to more this year.
+
+
+                              • Campus Vibe: The school is known for its <strong>{selectedSchool.strength} </strong> and a disciplineStyle learning environment. <br /> <hr />
+
+
+                              • Living & Expenses: Tuition and basic registration fees average around <strong>{selectedSchool.tuition}</strong> per session, and freshmen typically stay in <strong>{selectedSchool.housing} </strong>As hostels are available within the school.
+
+                              For full admission details, step-by-step registration procedures, and official fee structures, use the link below to visit the official portal.
+                            </span>
+
+                          </td>
+
+
                         </tr>
 
                         <tr>
-                          <td colSpan={4} className="text-center px-4 py-3">
+                          <td colSpan={6} className="text-center px-4 py-3">
                             <button
                               onClick={() => {
                                 console.log(`Link: ${selectedSchool.link}`);
                                 window.open(selectedSchool.link, "_blank");
-
-                              
                               }}
-                              className="btn btn-primary btn-sm"
+                              className="btn btn-primary btn-lg"
                             >
-                              See More
-                            </button>
+                              Go to school portal to explore more                            </button>
                           </td>
                         </tr>
                       </>

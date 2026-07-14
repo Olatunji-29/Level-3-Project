@@ -7,7 +7,8 @@ const courseSchema = new Schema({
   cutOffMark: { type: Number, required: true },
   jambSubjectCombination: [String], // Array of strings: ['Maths', 'Physics', etc]
   tuition: { type: String }, 
-  faculty: { type: String }
+  faculty: { type: String },
+  degree: {type: String}
 });
 
 // 2. Define Degree Schema 
@@ -28,16 +29,15 @@ const schoolSchema = new Schema({
   location: { type: String, required: true },
   state: { type: String, required: true },
   link: {type: String, required: true},
-  
+  path: {type: String},
+  housing: {type: String},
+  strength: {type: String},
+  rank: {type: String},
+  year: {type: String},
+  applicant: {type: String},
   // Use the sub-schemas here
   courses: [courseSchema], 
-  degrees: {
-    type: [degreeSchema],
-    default: [
-      { type: "B.Sc", duration: "4 years" },
-      { type: "B.Eng", duration: "5 years" }
-    ]
-  },
+
 
   description: {
     history: String,

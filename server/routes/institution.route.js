@@ -16,6 +16,7 @@ router.delete('/:id', deleteInstitution);
 
 router.put("/institution/:id", updateInstitution);
 
+
 router.get('/institutions/:id', async (req, res) => {
     try {
         const institution = await Institution.findById(req.params.id);
