@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowRight, CheckCircle, Globe, ShieldCheck, Zap, GraduationCap } from 'lucide-react';
-import {Link, useNavigate} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const Landingpage = () => {
-    const navigate = useNavigate
-    const goSignUp = () => {
-        alert(99)
-    }
+    const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
+
+
+    const goExplore = () => {
+        setLoading(true);
+
+        setTimeout(() => {
+            navigate("/home");
+        }, 2000);
+    };
+
+
     return (
         <div className="bg-white">
             {/* Navbar */}
@@ -63,8 +72,22 @@ const Landingpage = () => {
                         The most sophisticated course comparison engine in Nigeria. We help you match your JAMB scores with the right institutions in seconds.
                     </p>
                     <div className="d-flex justify-content-center gap-3">
-                        <button onClick={goSignUp} className="btn btn-lg px-4 py-3 fw-bold" style={{ backgroundColor: '#D4A017', color: 'white' }}>
-                            Explore Courses <ArrowRight size={20} className="ms-2" />
+                        <button
+                            onClick={goExplore}
+                            disabled={loading}
+                            className="btn btn-lg px-4 py-3 fw-bold"
+                            style={{ backgroundColor: '#D4A017', color: 'white' }}
+                        >
+                            {loading ? (
+                                <>
+                                    <span className="spinner-border spinner-border-sm me-2"></span>
+                                    Loading...
+                                </>
+                            ) : (
+                                <>
+                                    Explore Courses <ArrowRight size={20} className="ms-2" />
+                                </>
+                            )}
                         </button>
                         <button className="btn btn-lg px-4 py-3 fw-bold btn-outline-light">
                             How it Works

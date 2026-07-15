@@ -13,7 +13,7 @@ import SchoolDetails from './pages/SchoolDetails.jsx'
 const router = createBrowserRouter([
   {path:'/', element: <Landingpage/>},
   {path:'/in', element: <Login/> },
-  {path:'/dash', element: <App/> },
+  {path:'/home', element: <App/> },
   {path:'/up', element: <Signup/> },
   {path:'/admin', element: <AdminDashboard/>},
   {path:"/school/:id", element:<SchoolDetails/>}
