@@ -225,11 +225,11 @@ const App = () => {
 
                               <br />
 
-                              • Admission: The primary cut-off mark sits around{" "}
+                              • Admission: The primary cut-off mark for <strong>{selectedCourse} </strong>  sits around{" "}
                               <strong>
                                 {selectedSchool.courses.find(c => c.name === selectedCourse)?.cutOffMark || "N/A"}
                               </strong>.
-                              If your score is lower, <strong>{selectedSchool.path || 'No other program'} </strong> is available in the school which you can consider looking forward to . <hr />
+                              If your score is lower, <strong>{selectedSchool.path || 'No other program'} </strong> is available in the school which you can consider looking forward to, Or choose another less competitive course . <hr />
 
                               • Subject Combination: The subjects required for <strong>{selectedCourse}</strong> are{" "}
                               <strong>
@@ -239,13 +239,16 @@ const App = () => {
                               </strong>. Applicant should know that Wrong subject combination can cause him/her admission. <br />  <hr />
 
 
-                              • Admission competition: <strong>{selectedSchool.name}</strong> is ranked <strong>{selectedSchool.rank} </strong>. So, that tells you how competitive the school is. And based on previous year, The school have approximately <strong>{selectedSchool.applicant}</strong> and still looking forward to more this year.
+                              • Admission competition: <strong>{selectedSchool.name}</strong> is ranked <strong>{selectedSchool.rank.split(',')[0]}</strong> in Nigeria and <strong>{selectedSchool.rank.split(',')[1].trim()}</strong>  in the whole world. So, that tells you how competitive the school is. And based on previous year, The school have approximately <strong>{selectedSchool.applicant}</strong> applicants and still looking forward to more this year. <hr />
 
 
-                              • Campus Vibe: The school is known for its <strong>{selectedSchool.strength} </strong> and a disciplineStyle learning environment. <br /> <hr />
+                              • Campus Vibe: The school is known for its <strong>{selectedSchool.strength} and a disciplineStyle learning environment.  </strong>  <br /> <hr />
 
 
-                              • Living & Expenses: Tuition and basic registration fees average around <strong>{selectedSchool.tuition}</strong> per session, and freshmen typically stay in <strong>{selectedSchool.housing} </strong>As hostels are available within the school.
+                              • Living & Expenses: Tuition for <strong> {selectedCourse} </strong> is approximately <strong>
+                                {`₦${selectedSchool.courses.find(c => c.name === selectedCourse)?.tuition || "Not available"}`}
+
+                              </strong> per session and may change over time. Students typically stay in<strong> {selectedSchool.housing} </strong>.
 
                               For full admission details, step-by-step registration procedures, and official fee structures, use the link below to visit the official portal.
                             </span>
@@ -261,6 +264,8 @@ const App = () => {
                               onClick={() => {
                                 console.log(`Link: ${selectedSchool.link}`);
                                 window.open(selectedSchool.link, "_blank");
+  
+
                               }}
                               className="btn btn-primary btn-lg"
                             >

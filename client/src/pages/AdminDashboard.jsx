@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, School, BookOpen, MapPin, Save, XCircle, ChevronRight, Database } from 'lucide-react';
+import { Plus, SquarePen, Trash2, School, BookOpen, MapPin, Save, XCircle, ChevronRight, Database } from 'lucide-react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../components/Navbar';
@@ -26,6 +26,7 @@ const AdminDashboard = () => {
 
     const [schools, setSchools] = useState([]);
     const [editingSchoolId, setEditingSchoolId] = useState(null);
+    const [editingCourse, setEditingCourse] = useState(null)
 
     useEffect(() => {
         axios.get("http://localhost:2419/institutions/schools")
@@ -54,6 +55,19 @@ const AdminDashboard = () => {
         setFormData(school)
         setCoursesList(school.courses);
         console.log(school);
+
+    }
+
+    const editCourse = (course) => {
+        setEditingCourse(course)
+        setCurrentCourse({
+            name: course.name,
+            cutOffMark: course.cutOffMark,
+            subjects: course.jambSubjectCombination.join(", "),
+            tuition: course.tuition,
+            degree: course.degree,
+            faculty: course.faculty,
+        });
 
     }
 
@@ -104,6 +118,36 @@ const AdminDashboard = () => {
     const removeCourse = (id) => {
         setCoursesList(coursesList.filter(c => c.id !== id));
     };
+
+    const updateCourse = () => {
+    const updatedCourses = coursesList.map(c => {
+        if (c.name === editingCourse.name) {
+            return {
+                ...c,
+                ...currentCourse,
+                jambSubjectCombination: currentCourse.subjects
+                    .split(",")
+                    .map(s => s.trim())
+            };
+        }
+
+        return c;
+    });
+
+    setCoursesList(updatedCourses);
+
+    setCurrentCourse({
+        name: "",
+        cutOffMark: "",
+        subjects: "",
+        tuition: "",
+        degree: "",
+        faculty: "",
+    });
+
+    setEditingCourse(null);
+};
+
 
     const submitToDatabase = async (e) => {
         e.preventDefault();
@@ -176,6 +220,8 @@ const AdminDashboard = () => {
             const msg = err.response?.data?.message || err.message || "Unknown error";
             setStatus({ type: "danger", message: msg });
         }
+
+        
     };
 
     return (
@@ -309,8 +355,8 @@ const AdminDashboard = () => {
                                     <input type="text" name="tuition" className="form-control border-secondary-subtle py-2" placeholder="₦250,000" value={currentCourse.tuition} onChange={handleCourseInputChange} />
                                 </div>
                                 <div className="col-md-6 d-flex align-items-end">
-                                    <button type="button" onClick={addCourseToList} className="btn btn-dark w-100 py-2 fw-bold d-flex align-items-center justify-content-center gap-2">
-                                        <Plus size={18} /> Add Course to Batch
+                                    <button type="button" onClick={editingCourse? updateCourse : addCourseToList} className="btn btn-dark w-100 py-2 fw-bold d-flex align-items-center justify-content-center gap-2">
+                                        <Plus size={18} />  {editingCourse? 'Update Course' : 'Add Course to batch'}
                                     </button>
                                 </div>
                             </div>
@@ -340,6 +386,7 @@ const AdminDashboard = () => {
                                                     <div className="text-muted italic" style={{ fontSize: '10px' }}>{c.jambSubjectCombination.join(' • ')}</div>
                                                 </div>
                                                 <button onClick={() => removeCourse(c.id)} className="btn btn-link text-danger p-0"><Trash2 size={16} /></button>
+                                                <button onClick={() => editCourse(c)} className="btn btn-link text-danger p-0" > <SquarePen size={16} /></button>
                                             </div>
                                         ))}
                                     </div>
