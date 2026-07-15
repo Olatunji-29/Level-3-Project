@@ -29,7 +29,7 @@ const AdminDashboard = () => {
     const [editingCourse, setEditingCourse] = useState(null)
 
     useEffect(() => {
-        axios.get("http://localhost:2419/institutions/schools")
+        axios.get("https://jambite-api.onrender.com/institutions/schools")
             .then(res => {
                 setSchools(res.data.data);
             })
@@ -41,7 +41,7 @@ const AdminDashboard = () => {
 
     const deleteSchool = async (id) => {
         try {
-            await axios.delete(`http://localhost:2419/institutions/${id}`);
+            await axios.delete(`https://jambite-api.onrender.com/institutions/${id}`);
 
             // remove from UI instantly
             setSchools(prev => prev.filter(s => s._id !== id));
@@ -177,7 +177,7 @@ const AdminDashboard = () => {
         try {
             if (editingSchoolId) {
                 await axios.put(
-                    `http://localhost:2419/institutions/institution/${editingSchoolId}`,
+                    `https://jambite-api.onrender.com/institutions/institution/${editingSchoolId}`,
                     payload
                 );
 
@@ -187,7 +187,7 @@ const AdminDashboard = () => {
                 });
             } else {
                 await axios.post(
-                    "http://localhost:2419/institutions/institution",
+                    "https://jambite-api.onrender.com/institutions/institution",
                     payload
                 );
 

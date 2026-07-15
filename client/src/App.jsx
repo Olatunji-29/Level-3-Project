@@ -23,7 +23,7 @@ const App = () => {
 
 
   useEffect(() => {
-    axios.get('http://localhost:2419/institutions/schools')
+    axios.get('https://jambite-api.onrender.com/institutions/schools')
       .then((result) => {
 
         const info = result.data.data
