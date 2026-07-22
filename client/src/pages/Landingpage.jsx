@@ -52,8 +52,8 @@ const Landingpage = () => {
                         {/* (Buttons moved outside collapse so they're always visible) */}
                     </div>
                     <div className="d-flex align-items-center gap-2 ms-auto">
-                        <Link to={'/up'} className="btn fw-bold px-3" style={{ color: '#D4A017', background: 'transparent', border: 'none' }}>Sign up</Link>
-                        <Link to={'/in'} className="btn fw-bold px-3" style={{ color: '#D4A017', background: 'transparent', border: 'none' }}>Login</Link>
+                        {/* <Link to={'/up'} className="btn fw-bold px-3" style={{ color: '#D4A017', background: 'transparent', border: 'none' }}>Sign up</Link> */}
+                        <Link to={'/in'} className="btn fw-bold px-3" style={{ color: '#D4A017', background: 'transparent', border: 'none' }}>Login As Admin</Link>
                         <button className="btn text-white fw-bold px-4" style={{ backgroundColor: '#D4A017', borderRadius: '5px', fontSize: '10px' }}>Contact Advisor</button>
                     </div>
                 </div>
