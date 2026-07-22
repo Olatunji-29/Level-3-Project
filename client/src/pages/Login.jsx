@@ -6,7 +6,6 @@ import { GraduationCap, Mail, Lock, Github } from 'lucide-react';
 const Login = () => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    name: '',
     email: '',
     password: ''
   })
@@ -17,11 +16,11 @@ const Login = () => {
     )
   }
 
-  const handleCreateAdmin = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
     
     try {
-      const response = await axios.post("https://jambite-api.onrender.com/admin/create", formData);
+      const response = await axios.post("https://jambite-api.onrender.com/admin/login", formData);
       console.log(response.data);
       navigate('/admin')
     } catch (err) {
@@ -44,17 +43,16 @@ const Login = () => {
                 </div>
                 <span className="fw-bold fs-4">EDUCOMPARE</span>
               </div>
+              <div>
+                <p className="fw-bold fs-4">Admin Login</p>
+              </div>
               {/* <h2 className="fw-bold">{mode === 'signin' ? 'Admin Login' : 'Create Account'}</h2> */}
               <p className="text-muted">Sign in to manage schools, courses, and admission information.</p>
             </div>
 
-            <form onSubmit={handleCreateAdmin}>
+            <form onSubmit={handleLogin}>
 
-              <div className="mb-3">
-                <label className="form-label small fw-bold">Full Name</label>
-                <input type="text" name='name' value={formData.name} onChange={handleChange} className="form-control form-control-lg fs-6 shadow-none" placeholder="John Doe" />
-              </div>
-
+             
               <div className="mb-3">
                 <label className="form-label small fw-bold">Email Address</label>
                 <div className="input-group">
@@ -77,7 +75,7 @@ const Login = () => {
                 className="btn btn-lg w-100 text-white fw-bold mb-3"
                 style={{ backgroundColor: "#D4A017" }}
               >
-                Create Admin
+                Login to Dashboard
               </button>
 
 

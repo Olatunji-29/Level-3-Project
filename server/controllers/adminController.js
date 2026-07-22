@@ -49,4 +49,53 @@ const createAdmin = async (req, res) => {
     }
 }
 
-module.exports = {createAdmin};
+
+const loginAdmin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide email and password",
+      });
+    }
+
+    const existingAdmin = await Admin.findOne({ email });
+
+    if (!existingAdmin) {
+      return res.status(404).json({
+        success: false,
+        message: "Admin not found",
+      });
+    }
+
+    const isMatch = await bcrypt.compare(password, existingAdmin.password);
+
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid password",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Login successful",
+      admin: {
+        id: existingAdmin._id,
+        name: existingAdmin.name,
+        email: existingAdmin.email,
+      },
+    });
+
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: err.message,
+    });
+  }
+};
+
+module.exports = {createAdmin, loginAdmin};
