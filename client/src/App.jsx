@@ -48,6 +48,7 @@ const App = () => {
     console.log(selectedDegree)
   }
 
+  
 
   // const courses = [
   //   { school: "University of Lagos", status: "ADMISSION OPEN", type: "B.Sc Computer Science", duration: "4 Years | Full-time", score: "280+", subjects: "Math, Eng, Phys, Chem", tuition: "₦245,000", logo: "🏛️" },
@@ -260,6 +261,7 @@ const App = () => {
 
                         <tr>
                           <td colSpan={6} className="text-center px-4 py-3">
+                            
                             <button
                               onClick={() => {
                                 console.log(`Link: ${selectedSchool.link}`);

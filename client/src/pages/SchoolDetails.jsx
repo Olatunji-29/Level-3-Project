@@ -7,9 +7,17 @@ const SchoolDetails = () => {
     const [school, setSchool] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://localhost:2419/institutions/${id}`)
-            .then(res => setSchool(res.data.data))
-            .catch(err => console.log(err));
+        console.log("ID:", id);
+
+        axios.get(`https://jambite-api.onrender.com/institutions/${id}`)
+        .then(res => {
+                console.log("Response:", res.data);
+                 setSchool(res.data.data)})
+            .catch(err => {
+                console.log("Error:", err.response);
+                console.log("Status:", err.response?.status);
+                console.log("Data:", err.response?.data);
+            });
     }, [id]);
 
     if (!school) return <p>Loading...</p>;
