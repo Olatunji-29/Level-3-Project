@@ -1,6 +1,6 @@
 const Admin = require("../models/adminModel")
 const bcrypt = require("bcrypt")
-const jwt = require('jsonwebtoken')
+
 
 
 const createAdmin = async (req, res) => {
@@ -80,21 +80,10 @@ const loginAdmin = async (req, res) => {
       });
     }
 
-    const token = jwt.sign(
-      {
-        id: existingAdmin._id,
-        email: existingAdmin.email,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "7d",
-      }
-    );
 
     return res.status(200).json({
       success: true,
       message: "Login successful",
-      token,
       admin: {
         id: existingAdmin._id,
         name: existingAdmin.name,
@@ -104,12 +93,12 @@ const loginAdmin = async (req, res) => {
 
   } catch (err) {
 
-    console.error("LOGIN ERROR:", err);
+    
     return res.status(500).json({
       success: false,
       message: "Internal server error",
       error: err.message,
-      stack: err.stack
+      
     });
   }
 };
