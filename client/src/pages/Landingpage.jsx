@@ -6,16 +6,25 @@ import Footer from '../components/Footer';
 
 const Landingpage = () => {
     const navigate = useNavigate()
-    const [loading, setLoading] = useState(false);
+    const [loadingExplore, setLoadingExplore] = useState(false);
+    const [loadingAdmin,setLoadingAdmin] = useState(false)
 
 
     const goExplore = () => {
-        setLoading(true);
+        setLoadingExplore(true);
 
         setTimeout(() => {
             navigate("/home");
         }, 2000);
     };
+
+    const toAdmin = () => {
+        setLoadingAdmin(true)
+        setTimeout(() => {
+            navigate('/in')
+        }, 2000);
+
+    }
 
 
     return (
@@ -52,8 +61,19 @@ const Landingpage = () => {
                         {/* (Buttons moved outside collapse so they're always visible) */}
                     </div>
                     <div className="d-flex align-items-center gap-2 ms-auto">
-                        {/* <Link to={'/up'} className="btn fw-bold px-3" style={{ color: '#D4A017', background: 'transparent', border: 'none' }}>Sign up</Link> */}
-                        <Link to={'/in'} className="btn fw-bold px-3" style={{ color: '#D4A017', background: 'transparent', border: 'none' }}>Login As Admin</Link>
+                        <button onClick={() => toAdmin()}
+                            disabled={loadingAdmin}
+                            className="btn text-white fw-bold px-4" style={{ background: '#D4A017', borderRadius: '5px', fontSize: '10px' }}>
+                            {loadingAdmin ? (
+                             <>
+                             <span className='spinner-border spinner-border-sm me-2'></span>
+                             Loading...
+                             </>       
+                                ): (
+                                <>Login As an Admin</>
+                                )}
+
+                        </button>
                         <button className="btn text-white fw-bold px-4" style={{ backgroundColor: '#D4A017', borderRadius: '5px', fontSize: '10px' }}>Contact Advisor</button>
                     </div>
                 </div>
@@ -74,11 +94,11 @@ const Landingpage = () => {
                     <div className="d-flex justify-content-center gap-3">
                         <button
                             onClick={goExplore}
-                            disabled={loading}
+                            disabled={loadingExplore}
                             className="btn btn-lg px-4 py-3 fw-bold"
                             style={{ backgroundColor: '#D4A017', color: 'white' }}
                         >
-                            {loading ? (
+                            {loadingExplore ? (
                                 <>
                                     <span className="spinner-border spinner-border-sm me-2"></span>
                                     Loading...
