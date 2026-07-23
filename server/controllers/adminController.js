@@ -103,10 +103,13 @@ const loginAdmin = async (req, res) => {
     });
 
   } catch (err) {
+
+    console.error("LOGIN ERROR:", err);
     return res.status(500).json({
       success: false,
       message: "Internal server error",
       error: err.message,
+      stack: err.stack
     });
   }
 };
